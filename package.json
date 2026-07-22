@@ -1,7 +1,7 @@
 {
   "name": "codex-tencent-connectors",
-  "version": "0.1.1",
-  "description": "Codex plugin for WeCom, QQ Mail, and Tencent Docs.",
+  "version": "0.1.2",
+  "description": "面向 Codex 的企业微信、QQ 邮箱和腾讯文档连接器插件。",
   "homepage": "https://github.com/Fortytwoo/codex-tencent-connectors#readme",
   "repository": {
     "type": "git",

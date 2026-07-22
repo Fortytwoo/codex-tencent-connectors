@@ -1,7 +1,7 @@
 {
   "name": "codex-tencent-connectors",
   "interface": {
-    "displayName": "Tencent Connectors"
+    "displayName": "Codex 腾讯连接器"
   },
   "plugins": [
     {

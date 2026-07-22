@@ -1,7 +1,7 @@
 {
   "name": "tencent-connectors",
-  "version": "0.1.1",
-  "description": "Connect Codex to WeCom, QQ Mail, and Tencent Docs.",
+  "version": "0.1.2",
+  "description": "在 Codex 中使用企业微信、QQ 邮箱和腾讯文档。",
   "author": {
     "name": "Fortytwoo",
     "url": "https://github.com/Fortytwoo"
@@ -13,16 +13,16 @@
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
   "interface": {
-    "displayName": "Tencent Connectors",
-    "shortDescription": "Use WeCom, QQ Mail, and Tencent Docs from Codex.",
-    "longDescription": "Combines a local WeCom CLI adapter with the official QQ Mail and Tencent Docs remote MCP services. Includes workflow skills and confirmation rules for sensitive actions.",
+    "displayName": "腾讯连接器",
+    "shortDescription": "在 Codex 中使用企业微信、QQ 邮箱和腾讯文档。",
+    "longDescription": "组合本地企业微信 CLI 适配器与官方 QQ 邮箱、腾讯文档远程 MCP，并为敏感写操作提供确认机制。",
     "developerName": "Fortytwo",
     "category": "Productivity",
     "capabilities": ["Read", "Write", "Interactive"],
     "defaultPrompt": [
-      "Check my recent WeCom messages.",
-      "Summarize my unread QQ Mail messages.",
-      "Find a document in Tencent Docs."
+      "查看我最近的企业微信消息。",
+      "总结 QQ 邮箱中的未读邮件。",
+      "在腾讯文档中查找一份文档。"
     ],
     "brandColor": "#07C160"
   }
