@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "wecom": {
+      "type": "stdio",
+      "cwd": ".",
+      "command": "node",
+      "args": ["./runtime/server.mjs"]
+    },
+    "qq-mail": {
+      "type": "http",
+      "url": "https://api.mail.qq.com/mcp"
+    },
+    "tencent-docs": {
+      "type": "http",
+      "url": "https://docs.qq.com/openapi/mcp"
+    }
+  }
+}

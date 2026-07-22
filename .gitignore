@@ -1,0 +1,6 @@
+node_modules/
+dist/
+plugins/tencent-connectors/runtime/*.map
+*.log
+.env
+.DS_Store

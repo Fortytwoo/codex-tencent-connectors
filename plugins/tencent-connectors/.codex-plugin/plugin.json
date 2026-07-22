@@ -1,0 +1,29 @@
+{
+  "name": "tencent-connectors",
+  "version": "0.1.1",
+  "description": "Connect Codex to WeCom, QQ Mail, and Tencent Docs.",
+  "author": {
+    "name": "Fortytwoo",
+    "url": "https://github.com/Fortytwoo"
+  },
+  "homepage": "https://github.com/Fortytwoo/codex-tencent-connectors",
+  "repository": "https://github.com/Fortytwoo/codex-tencent-connectors",
+  "license": "MIT",
+  "keywords": ["wecom", "qq-mail", "tencent-docs", "mcp", "codex"],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Tencent Connectors",
+    "shortDescription": "Use WeCom, QQ Mail, and Tencent Docs from Codex.",
+    "longDescription": "Combines a local WeCom CLI adapter with the official QQ Mail and Tencent Docs remote MCP services. Includes workflow skills and confirmation rules for sensitive actions.",
+    "developerName": "Fortytwo",
+    "category": "Productivity",
+    "capabilities": ["Read", "Write", "Interactive"],
+    "defaultPrompt": [
+      "Check my recent WeCom messages.",
+      "Summarize my unread QQ Mail messages.",
+      "Find a document in Tencent Docs."
+    ],
+    "brandColor": "#07C160"
+  }
+}
