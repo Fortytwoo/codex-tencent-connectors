@@ -9,11 +9,37 @@
 > [!IMPORTANT]
 > 本项目是社区维护的非官方开源项目，与腾讯、企业微信、QQ 邮箱、腾讯文档或 OpenAI 无隶属、代理、合作或背书关系。使用前请阅读[免责声明](#免责声明)，并确认你有权访问和操作相关账号、组织及数据。
 
-## 一句话安装
+## 安装
 
-在 PowerShell、命令提示符或现代 Shell 中执行：
+根据当前操作系统和终端选择对应命令。各环境安装的是同一个插件，插件会自动选择适配当前系统和 CPU 架构的企业微信运行时。
+
+### Windows PowerShell
+
+兼容 Windows PowerShell 5.1 和 PowerShell 7：
 
 ```powershell
+codex plugin marketplace add Fortytwoo/codex-tencent-connectors; if ($LASTEXITCODE -eq 0) { codex plugin add tencent-connectors@codex-tencent-connectors }
+```
+
+### Windows CMD
+
+```bat
+codex plugin marketplace add Fortytwoo/codex-tencent-connectors && codex plugin add tencent-connectors@codex-tencent-connectors
+```
+
+### macOS Terminal（Zsh/Bash）
+
+适用于 Intel Mac 和 Apple Silicon Mac：
+
+```bash
+codex plugin marketplace add Fortytwoo/codex-tencent-connectors && codex plugin add tencent-connectors@codex-tencent-connectors
+```
+
+### Linux（Bash/Zsh）
+
+适用于 x64 和 ARM64 Linux：
+
+```bash
 codex plugin marketplace add Fortytwoo/codex-tencent-connectors && codex plugin add tencent-connectors@codex-tencent-connectors
 ```
 
@@ -87,15 +113,27 @@ Codex 会直接连接两个官方远程 MCP 服务。本地进程仅处理企业
 
 ## 更新与卸载
 
-刷新 Marketplace 并安装最新版本：
+### Windows PowerShell 更新
 
 ```powershell
+codex plugin marketplace upgrade codex-tencent-connectors; if ($LASTEXITCODE -eq 0) { codex plugin add tencent-connectors@codex-tencent-connectors }
+```
+
+### Windows CMD 更新
+
+```bat
+codex plugin marketplace upgrade codex-tencent-connectors && codex plugin add tencent-connectors@codex-tencent-connectors
+```
+
+### macOS/Linux 更新
+
+```bash
 codex plugin marketplace upgrade codex-tencent-connectors && codex plugin add tencent-connectors@codex-tencent-connectors
 ```
 
 卸载插件：
 
-```powershell
+```bash
 codex plugin remove tencent-connectors@codex-tencent-connectors
 ```
 
