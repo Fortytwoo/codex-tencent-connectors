@@ -1,6 +1,6 @@
 {
   "name": "tencent-connectors",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "在 Codex 中使用企业微信、QQ 邮箱和腾讯文档。",
   "author": {
     "name": "Fortytwoo",

@@ -1,6 +1,6 @@
 {
   "name": "codex-tencent-connectors",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "面向 Codex 的企业微信、QQ 邮箱和腾讯文档连接器插件。",
   "homepage": "https://github.com/Fortytwoo/codex-tencent-connectors#readme",
   "repository": {
@@ -19,13 +19,15 @@
     "plugins",
     "scripts/build-plugin.mjs",
     "scripts/sync-native-runtimes.mjs",
+    "scripts/agent-install.mjs",
+    "AGENTS.md",
     "THIRD_PARTY_NOTICES.md"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json && node scripts/build-plugin.mjs",
     "sync:runtimes": "node scripts/sync-native-runtimes.mjs",
     "check": "tsc -p tsconfig.json --noEmit",
-    "test": "npm run build && node --test dist/confirmation-store.test.js dist/errors.test.js dist/wecom-policy.test.js && node scripts/smoke-plugin.mjs",
+    "test": "npm run build && node --test dist/confirmation-store.test.js dist/errors.test.js dist/wecom-policy.test.js && node scripts/smoke-plugin.mjs && node scripts/agent-install.mjs --dry-run",
     "smoke": "npm run build && node scripts/smoke-plugin.mjs",
     "start": "node dist/server.js"
   },

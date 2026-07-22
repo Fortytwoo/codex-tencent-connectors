@@ -45,6 +45,38 @@ codex plugin marketplace add Fortytwoo/codex-tencent-connectors && codex plugin 
 
 安装后请重启 Codex。
 
+## 让 Agent 自动安装
+
+本仓库提供根目录 [`AGENTS.md`](AGENTS.md) 和零依赖安装器，方便 Codex、Claude Code、OpenCode 等具备终端能力的 Agent 在用户明确要求后自主完成安装和验证。
+
+你可以把下面这句话发给正在读取本项目的 Agent：
+
+```text
+请阅读本仓库的 AGENTS.md，按照其中的“推荐安装流程”自主安装并验证该 Codex 插件。不要自动启动账号授权，安装完成后告诉我需要执行的授权步骤。
+```
+
+Agent 推荐先预览操作：
+
+```bash
+node scripts/agent-install.mjs --dry-run
+```
+
+用户已明确同意安装后执行。默认安装 GitHub 公开稳定版本：
+
+```bash
+node scripts/agent-install.mjs --yes
+```
+
+只有在用户明确要求安装当前工作树中的未发布开发版本时，才使用：
+
+```bash
+node scripts/agent-install.mjs --yes --local
+```
+
+如果 Agent 只有 GitHub 网页上下文、没有本地仓库，则应按照 [`AGENTS.md`](AGENTS.md) 的“从 GitHub 安装”章节，逐条执行 Marketplace 注册和插件安装命令。
+
+安装器会检查环境、注册 Marketplace、安装插件，并验证 `wecom`、`qq-mail`、`tencent-docs` 三个 MCP。它不会自动读取凭证或启动账号登录。
+
 ## 支持能力
 
 - **企业微信：** 通过官方 `wecom-cli` 读取和管理消息、通讯录、文档、智能表格、会议、日程和待办。
