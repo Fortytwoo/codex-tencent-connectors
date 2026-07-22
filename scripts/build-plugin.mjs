@@ -1,4 +1,4 @@
-import { mkdir, copyFile, rm } from "node:fs/promises";
+import { chmod, mkdir, copyFile, rm } from "node:fs/promises";
 import { createRequire } from "node:module";
 import { platform, arch } from "node:os";
 import { dirname, resolve } from "node:path";
@@ -34,5 +34,9 @@ const packageName = {
 if (!packageName) throw new Error(`Unsupported WeCom CLI platform: ${platform()}-${arch()}`);
 const packageJson = require.resolve(`${packageName}/package.json`);
 const nativeName = platform() === "win32" ? "wecom-cli.exe" : "wecom-cli";
-await copyFile(resolve(dirname(packageJson), "bin", nativeName), resolve(runtimeDir, nativeName));
-await copyFile(resolve(dirname(packageJson), "LICENSE"), resolve(runtimeDir, "WECOM-LICENSE.txt"));
+const platformDir = resolve(runtimeDir, "native", `${platform()}-${arch()}`);
+await mkdir(platformDir, { recursive: true });
+const nativeTarget = resolve(platformDir, nativeName);
+await copyFile(resolve(dirname(packageJson), "bin", nativeName), nativeTarget);
+if (platform() !== "win32") await chmod(nativeTarget, 0o755);
+await copyFile(resolve(dirname(packageJson), "LICENSE"), resolve(platformDir, "LICENSE.txt"));

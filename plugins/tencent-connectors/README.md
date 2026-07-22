@@ -4,7 +4,7 @@
 
 [![Codex Plugin](https://img.shields.io/badge/Codex-plugin-111827)](https://developers.openai.com/codex/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Platform: Windows](https://img.shields.io/badge/platform-Windows-0078D4)](#运行要求)
+[![Platforms](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-0078D4)](#运行要求)
 
 > [!IMPORTANT]
 > 本项目是社区维护的非官方开源项目，与腾讯、企业微信、QQ 邮箱、腾讯文档或 OpenAI 无隶属、代理、合作或背书关系。使用前请阅读[免责声明](#免责声明)，并确认你有权访问和操作相关账号、组织及数据。
@@ -38,6 +38,8 @@ codex plugin marketplace add Fortytwoo/codex-tencent-connectors && codex plugin 
 ```
 
 Codex 会调用 `wecom_start_auth`，在默认浏览器打开企业微信官方 `work.weixin.qq.com` 授权页面，并等待用户扫码。如果浏览器无法自动打开，Codex 会返回官方授权链接作为兜底。
+
+在没有桌面浏览器的 Linux 服务器上，可复制 Codex 返回的官方授权链接，在另一台可访问的设备上打开并扫码。
 
 ### QQ 邮箱
 
@@ -74,12 +76,14 @@ Codex 会直接连接两个官方远程 MCP 服务。本地进程仅处理企业
 ## 运行要求
 
 - Windows x64
+- macOS Intel x64 或 Apple Silicon ARM64
+- Linux x64 或 ARM64
 - 支持插件功能的 Codex CLI
 - Node.js 20 或更高版本
 - 使用企业微信功能时，需要可正常授权的企业微信账号
 - 使用 QQ 邮箱和腾讯文档时，需要可正常授权的 QQ 账号
 
-仓库已包含 Windows x64 版官方 `wecom-cli` 运行时。从 GitHub Marketplace 安装时不需要克隆仓库、执行 `npm install` 或在本地构建。其他操作系统可在存在兼容 `@wecom/cli` 原生包的情况下自行从源码构建。
+仓库已包含 Windows x64、macOS Intel/Apple Silicon、Linux x64/ARM64 版官方 `wecom-cli` 运行时。从 GitHub Marketplace 安装时不需要克隆仓库、执行 `npm install` 或在本地构建。插件会根据当前操作系统和 CPU 架构自动选择对应运行时。
 
 ## 更新与卸载
 
@@ -110,6 +114,7 @@ node dist/cli.js install
 ```powershell
 npm run check
 npm test
+npm run sync:runtimes
 node dist/cli.js doctor
 node dist/cli.js auth
 ```
@@ -128,7 +133,7 @@ node dist/cli.js auth
 ## 功能边界
 
 - 当前腾讯文档仅支持个人版，不配置企业版腾讯文档或 OneID。
-- 内置企业微信原生运行时目前仅面向 Windows x64。
+- 内置企业微信原生运行时支持 Windows x64、macOS x64/ARM64、Linux x64/ARM64；其他系统或架构需要通过 `WECOM_CLI_PATH` 自行提供兼容程序。
 - 第三方服务的接口、权限、限额、登录策略和可用性可能随时变化。
 - 本插件不能替代企业内部的审批、数据分级、合规审查和账号权限管理制度。
 

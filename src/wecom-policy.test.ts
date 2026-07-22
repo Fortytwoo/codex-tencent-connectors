@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { isAllowedRead, isAllowedWrite } from "./wecom-policy.js";
-import { isVersionAtLeast, isWeComAuthenticated, parseWeComVersion } from "./wecom-cli.js";
+import { isVersionAtLeast, isWeComAuthenticated, parseWeComVersion, weComPlatformKey } from "./wecom-cli.js";
 
 test("read operations are allowlisted", () => {
   assert.equal(isAllowedRead("msg", "get_message"), true);
@@ -13,6 +13,13 @@ test("WeCom version parsing and comparison enforce the minimum", () => {
   assert.equal(isVersionAtLeast("0.1.9"), true);
   assert.equal(isVersionAtLeast("0.2.0"), true);
   assert.equal(isVersionAtLeast("0.1.8"), false);
+});
+
+test("WeCom platform keys cover supported desktop and server targets", () => {
+  assert.equal(weComPlatformKey("win32", "x64"), "win32-x64");
+  assert.equal(weComPlatformKey("darwin", "arm64"), "darwin-arm64");
+  assert.equal(weComPlatformKey("linux", "x64"), "linux-x64");
+  assert.equal(weComPlatformKey("linux", "riscv64"), undefined);
 });
 
 test("write operations require prepare and confirm", () => {

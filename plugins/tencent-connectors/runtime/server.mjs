@@ -21181,7 +21181,7 @@ function normalizeWeComError(result) {
 // src/wecom-cli.ts
 import { spawn } from "node:child_process";
 import { createRequire } from "node:module";
-import { homedir, platform } from "node:os";
+import { arch, homedir, platform } from "node:os";
 import { dirname, join } from "node:path";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -21190,11 +21190,18 @@ var AUTH_URL_PATTERN = /https:\/\/work\.weixin\.qq\.com\/[^\s"']+/;
 var AUTH_SESSION_TTL_MS = 5 * 60 * 1e3;
 var authProcess;
 var authSession;
+function weComPlatformKey(currentPlatform = platform(), currentArch = arch()) {
+  const key = `${currentPlatform}-${currentArch}`;
+  return (/* @__PURE__ */ new Set(["win32-x64", "darwin-x64", "darwin-arm64", "linux-x64", "linux-arm64"])).has(key) ? key : void 0;
+}
 function candidatePaths() {
   const candidates = [];
   if (process.env.WECOM_CLI_PATH) candidates.push(process.env.WECOM_CLI_PATH);
   const runtimeDir = dirname(fileURLToPath(import.meta.url));
-  candidates.push(join(runtimeDir, platform() === "win32" ? "wecom-cli.exe" : "wecom-cli"));
+  const platformKey = weComPlatformKey();
+  const nativeName = platform() === "win32" ? "wecom-cli.exe" : "wecom-cli";
+  if (platformKey) candidates.push(join(runtimeDir, "native", platformKey, nativeName));
+  candidates.push(join(runtimeDir, nativeName));
   if (platform() === "win32") {
     candidates.push(
       join(
@@ -21217,10 +21224,10 @@ function candidatePaths() {
   try {
     const packagePath = require2.resolve("@wecom/cli/package.json");
     const packageDir = dirname(packagePath);
-    const platformPackage = platform() === "win32" ? "cli-win32-x64" : void 0;
+    const platformPackage = platformKey?.replace(/^(win32|darwin|linux)-/, "cli-$1-");
     if (platformPackage) {
-      candidates.push(join(packageDir, "node_modules", "@wecom", platformPackage, "bin", "wecom-cli.exe"));
-      candidates.push(join(dirname(packageDir), platformPackage, "bin", "wecom-cli.exe"));
+      candidates.push(join(packageDir, "node_modules", "@wecom", platformPackage, "bin", nativeName));
+      candidates.push(join(dirname(packageDir), platformPackage, "bin", nativeName));
     }
   } catch {
   }

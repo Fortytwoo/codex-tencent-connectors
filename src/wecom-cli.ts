@@ -1,6 +1,6 @@
 import { spawn } from "node:child_process";
 import { createRequire } from "node:module";
-import { homedir, platform } from "node:os";
+import { arch, homedir, platform } from "node:os";
 import { dirname, join } from "node:path";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -14,12 +14,25 @@ const AUTH_SESSION_TTL_MS = 5 * 60 * 1000;
 let authProcess: ChildProcessWithoutNullStreams | undefined;
 let authSession: WeComAuthSession | undefined;
 
+export function weComPlatformKey(
+  currentPlatform: NodeJS.Platform = platform(),
+  currentArch: string = arch()
+): string | undefined {
+  const key = `${currentPlatform}-${currentArch}`;
+  return new Set(["win32-x64", "darwin-x64", "darwin-arm64", "linux-x64", "linux-arm64"]).has(key)
+    ? key
+    : undefined;
+}
+
 function candidatePaths(): string[] {
   const candidates: string[] = [];
   if (process.env.WECOM_CLI_PATH) candidates.push(process.env.WECOM_CLI_PATH);
 
   const runtimeDir = dirname(fileURLToPath(import.meta.url));
-  candidates.push(join(runtimeDir, platform() === "win32" ? "wecom-cli.exe" : "wecom-cli"));
+  const platformKey = weComPlatformKey();
+  const nativeName = platform() === "win32" ? "wecom-cli.exe" : "wecom-cli";
+  if (platformKey) candidates.push(join(runtimeDir, "native", platformKey, nativeName));
+  candidates.push(join(runtimeDir, nativeName));
 
   if (platform() === "win32") {
     candidates.push(
@@ -44,10 +57,10 @@ function candidatePaths(): string[] {
   try {
     const packagePath = require.resolve("@wecom/cli/package.json");
     const packageDir = dirname(packagePath);
-    const platformPackage = platform() === "win32" ? "cli-win32-x64" : undefined;
+    const platformPackage = platformKey?.replace(/^(win32|darwin|linux)-/, "cli-$1-");
     if (platformPackage) {
-      candidates.push(join(packageDir, "node_modules", "@wecom", platformPackage, "bin", "wecom-cli.exe"));
-      candidates.push(join(dirname(packageDir), platformPackage, "bin", "wecom-cli.exe"));
+      candidates.push(join(packageDir, "node_modules", "@wecom", platformPackage, "bin", nativeName));
+      candidates.push(join(dirname(packageDir), platformPackage, "bin", nativeName));
     }
   } catch {
     // The doctor command reports a missing optional CLI dependency.
